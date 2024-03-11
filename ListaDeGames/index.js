@@ -102,3 +102,16 @@ app.put('/novogame/:index', (req, res) =>{
     return res.json(games);
 })
 
+/* Agora iremos criar nossa rota para deletarmos um game já existente em nosso
+ array que está simulando um banco de dados.
+ Para isso precisaremos trabalhar com índices, que seriam a mesma situação em
+ umbanco de dados só que trabalhando com “id” o nosso índice funcionará da
+ mesma forma que o “id”.
+ Assim como tivemos de passar por parâmetro o índice correspondente do meu
+ game no array faremos da mesma forma para deletarmos um game. */ 
+ app.delete("/:index", (req, res) =>{
+    const { index } = req.params;
+    games.splice(index,1);
+    return res.json({ message: "O Jogo foi deletado "});
+ })
+
