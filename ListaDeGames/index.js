@@ -49,17 +49,46 @@ app.use(express.json());
 //Lista de Games
 
 let games = [
-    {title: "Sea of Thieves", studio: "Rare", price: 30},
-    {title: "WOW", studio: "Blizzard", price: 120},
-    {title: "Valorant", studio: "Riot", price: 0},
-    {title: "COD", studio: "Activison", price: 200},
-    {title: "Minecraft", studio: "Mojang", price: 80},
-    {title: "Halo", studio: "Microsoft", price: 90},
-    {title: "Super Mario World", studio: "Nintendo", price: 150},
-    {title: "Need for Speed Most Wanted", studio: "EA Games", price: 100},
-    {title: "Donkey Kong Country 3", studio: "Rare", price: 200},
-    {title: "Resident Evil 2", studio: "Capcom", price: 200}
+    {id: 1, title: "Sea of Thieves", studio: "Rare", price: 30},
+    {id: 2, title: "WOW", studio: "Blizzard", price: 120},
+    {id: 3, title: "Valorant", studio: "Riot", price: 0},
+    {id: 4, title: "COD", studio: "Activison", price: 200},
+    {id: 5, title: "Minecraft", studio: "Mojang", price: 80},
+    {id: 6, title: "Halo", studio: "Microsoft", price: 90},
+    {id: 7, title: "Super Mario World", studio: "Nintendo", price: 150},
+    {id: 8, title: "Need for Speed Most Wanted", studio: "EA Games", price: 100},
+    {id: 9, title: "Donkey Kong Country 3", studio: "Rare", price: 200},
+    {id: 10, title: "Resident Evil 2", studio: "Capcom", price: 200}
 ]
+
+app.get("/lista/:id", (req, res) => {
+    const idGames = parseInt(req.params.id);
+
+    let mensagemErro = '';
+    let gamesFinded;
+
+    if (!(isNaN(idGames)))
+    {
+        gamesFinded = games.find(u => u.id === idGames);
+        if(!gamesFinded)
+        {
+            mensagemErro = 'Game não encontrado';
+        }
+    }
+    else
+    {
+        mensagemErro = 'Requisição inválida';
+    }
+
+    if (gamesFinded)
+    {
+        res.json(gamesFinded);
+    }
+    else
+    {
+        res.status(404).send({ "erro": mensagemErro});
+    }
+})
 
 app.get("/", (req, res) => {
     res.json(games);
@@ -80,7 +109,7 @@ app.post("/novogame", (req, res) => {
     res.send("OK");
 });
 /* Como podem observar, agora temos um tipo de envio de informações do tipo
- PUT eumarota nova “/novogame/:index” dessa forma eu consigo capturar qual
+ PUT e uma rota nova “/novogame/:index” dessa forma eu consigo capturar qual
  jogo cadastrado eu pretendo realizar a edição, o nome index nesse quesito
  significa que pretendo passar um parâmetro no formato de índice de um array
  ok?
@@ -105,7 +134,7 @@ app.put('/novogame/:index', (req, res) =>{
 /* Agora iremos criar nossa rota para deletarmos um game já existente em nosso
  array que está simulando um banco de dados.
  Para isso precisaremos trabalhar com índices, que seriam a mesma situação em
- umbanco de dados só que trabalhando com “id” o nosso índice funcionará da
+ um banco de dados só que trabalhando com “id” o nosso índice funcionará da
  mesma forma que o “id”.
  Assim como tivemos de passar por parâmetro o índice correspondente do meu
  game no array faremos da mesma forma para deletarmos um game. */ 
