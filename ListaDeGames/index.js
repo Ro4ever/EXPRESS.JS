@@ -138,7 +138,7 @@ app.put('/novogame/:index', (req, res) =>{
  mesma forma que o “id”.
  Assim como tivemos de passar por parâmetro o índice correspondente do meu
  game no array faremos da mesma forma para deletarmos um game. */ 
- app.delete("/:index", (req, res) =>{
+ app.delete("/:index", (req, res) => {
     const { index } = req.params;
     games.splice(index,1);
     return res.json({ message: "O Jogo foi deletado "});
